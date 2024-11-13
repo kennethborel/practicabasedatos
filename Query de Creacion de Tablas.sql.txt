@@ -1,0 +1,41 @@
+CREATE TABLE Equipos (
+    EquipoID INT IDENTITY(1,1) PRIMARY KEY,
+    TipoEquipo VARCHAR(50),
+    Modelo VARCHAR(50),
+    UsuarioID INT FOREIGN KEY REFERENCES Usuarios(UsuarioID)
+);
+
+CREATE TABLE Usuarios (
+    UsuarioID INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(50),
+    CorreoElectronico VARCHAR(100),
+    Telefono VARCHAR(20)
+);
+
+CREATE TABLE Reparaciones (
+    ReparacionID INT IDENTITY(1,1) PRIMARY KEY,
+    EquipoID INT FOREIGN KEY REFERENCES Equipos(EquipoID),
+    FechaSolicitud DATE,
+    Estado VARCHAR(50)
+);
+
+CREATE TABLE Tecnicos (
+    TecnicoID INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(50),
+    Especialidad VARCHAR(50)
+);
+
+CREATE TABLE Asignaciones (
+    AsignacionID INT IDENTITY(1,1) PRIMARY KEY,
+    ReparacionID INT FOREIGN KEY REFERENCES Reparaciones(ReparacionID),
+    TecnicoID INT FOREIGN KEY REFERENCES Tecnicos(TecnicoID),
+    FechaAsignacion DATE
+);
+
+CREATE TABLE DetallesReparacion (
+    DetalleID INT IDENTITY(1,1) PRIMARY KEY,
+    ReparacionID INT FOREIGN KEY REFERENCES Reparaciones(ReparacionID),
+    Descripcion TEXT,
+    FechaInicio DATE,
+    FechaFin DATE
+);
